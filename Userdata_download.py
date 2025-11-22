@@ -1,10 +1,9 @@
 from requests.auth import HTTPBasicAuth
 from e621_api import e621Api
-from tqdm_auto import tqdm
+from tqdm import tqdm
 import json
 import csv
 
-#Download E621 top users favorite data
 def get_user_interests(favs):
     user_interests = {}
     for fav in favs:
@@ -22,7 +21,7 @@ def get_user_interests(favs):
 
 INTERESTS_FILE = "interests.json"
 MIN_FAVORITES = 100
-pages_to_scrape = 3
+pages_to_scrape = 1
 
 if __name__ == "__main__":
     e621 = e621Api()
@@ -38,17 +37,9 @@ if __name__ == "__main__":
             if len(favs) < MIN_FAVORITES:
                 continue
 
-            user_interests = get_user_interests(favs)
-            
-            for tag in user_interests:
-                if not tag in interests:
-                    interests[tag] = 0.0
-            
-            for tag in interests:
-                user_interest_in_tag = user_interests[tag] if tag in user_interests else 0.0
-                interests[tag] = (interests[tag] * total_users + user_interest_in_tag) / (total_users + 1)
-
+            interests[user["id"]] = favs
             total_users += 1
+    print(f"Processed {total_users} users")
     
     with open(INTERESTS_FILE, 'w') as f:
         json.dump(interests, f, indent=4)
