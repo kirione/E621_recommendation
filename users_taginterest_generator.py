@@ -45,8 +45,6 @@ print(f"df_final: {df_final.head()}")
 #Aggregate tag correlation results across all users
 
 
-#TF-IDF to identify distinctive tags per user profile
-#Calculate user profile tag presence, relative presence and enjoyment
 #calculate sample user average(relative presence) *ignores duplicate posts
 average_taginterest_file = "users_taginterest.json"
 #sum general tags interest per user
