@@ -66,7 +66,10 @@ for user_id, group in df_final.groupby('user_id'):
     # Save to JSON
     
     with open(average_taginterest_file, 'a', encoding='utf-8') as f:
-        json.dump({user_id: tag_relative_presence}, f)
+        json.dump({
+        "user_id": user_id,
+        "tag_interest": tag_relative_presence
+    }, f)
         f.write('\n')
 
 
