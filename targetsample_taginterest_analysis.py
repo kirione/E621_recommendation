@@ -4,7 +4,7 @@ import json
 def tag_analysis(target_tag):
     #Set thresholds
     min_percent = 0.05 # Minimum percent tag frequency to consider a tag
-    #relative_presence_threshold = 1.5 # Minimum relative presence compared to global average to consider a tag
+    relative_presence_threshold = 1.5 # Minimum relative presence compared to global average to consider a tag
 
     #Targeted tag for subset profile
     # Convert average users tag interest to DataFrame
@@ -65,8 +65,9 @@ def tag_analysis(target_tag):
     for tag in subset_interests:
         if tag == target_tag:
             continue
-        subset_interests_relativepresence[tag] = subset_interests[tag]/average_taginterest_series.get(tag, 0.0)
-        print (f"Tag {tag} has an relative presence of {subset_interests_relativepresence[tag]}: average interest {subset_interests[tag]:.3f} vs global {average_taginterest_series.get(tag, 0.0):.3f}")
+        if (subset_interests[tag]/average_taginterest_series.get(tag, 0.0)) > relative_presence_threshold:
+            subset_interests_relativepresence[tag] = subset_interests[tag]/average_taginterest_series.get(tag, 0.0)
+            print (f"Tag {tag} has an relative presence of {subset_interests_relativepresence[tag]}: average interest {subset_interests[tag]:.3f} vs global {average_taginterest_series.get(tag, 0.0):.3f}")
 
     #Convert to dataframe for better visualization
     subset_interests_relativepresence_df = pd.DataFrame(
