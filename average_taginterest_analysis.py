@@ -6,7 +6,7 @@ min_percent = 0.05 # Minimum percent tag frequency to consider a tag
 relative_presence_threshold = 1.5 # Minimum relative presence compared to global average to consider a tag
 
 #Targeted tag for subset profile
-target_tag = "bondage"
+target_tag = "hyper_cum"
 # Convert average users tag interest to DataFrame
 with open("average_taginterest.json") as f:
     data = json.load(f)
