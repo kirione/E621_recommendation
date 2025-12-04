@@ -24,19 +24,18 @@ globalaverage_taginterest_df = pd.DataFrame(
 )
 
 #Layout
-with col1:
-    st.subheader("📊 E621 Tags")
-    
-    target_tag = st.selectbox("Select An E621 Tag to analyse", options=globalaverage_taginterest_df["tag"].tolist())
+st.subheader("📊 E621 Tags")
 
-    #Top 10 tags associated with selected tag
-    st.subheader(f"Top 10 Tags Enjoyed by Users Who Like {target_tag} (In enjoyment score - harmonic mean of tag frequency and relative to global average)")
-    target_tag_enjoyment = tag_analysis(target_tag)
-    target_tag_enjoyment_series = pd.Series(target_tag_enjoyment).sort_values(ascending=False).head(10)
-    st.bar_chart(target_tag_enjoyment_series)
+target_tag = st.selectbox("Select An E621 Tag to analyse", options=globalaverage_taginterest_df["tag"].tolist())
+
+#Top 10 tags associated with selected tag
+st.subheader(f"Top 10 Tags Enjoyed by Users Who Like {target_tag} (In enjoyment score - harmonic mean of tag frequency and relative to global average)")
+target_tag_enjoyment = tag_analysis(target_tag)
+target_tag_enjoyment_series = pd.Series(target_tag_enjoyment).sort_values(ascending=False).head(10)
+st.bar_chart(target_tag_enjoyment_series)
 
 
-    st.image(
-        "https://static1.e621.net/data/sample/b1/87/b187e41db4063a0bd9934c643835751f.jpg",
-        width=400
-    )
+st.image(
+    "https://static1.e621.net/data/sample/b1/87/b187e41db4063a0bd9934c643835751f.jpg",
+    width=400
+)
