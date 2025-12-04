@@ -24,7 +24,6 @@ globalaverage_taginterest_df = pd.DataFrame(
 )
 
 #Layout
-col1, col2 = st.columns([2, 1])
 with col1:
     st.subheader("📊 E621 Tags")
     
@@ -41,20 +40,3 @@ with col1:
         "https://static1.e621.net/data/sample/b1/87/b187e41db4063a0bd9934c643835751f.jpg",
         width=400
     )
-
-# -----------------------------
-# RIGHT SIDE: Controls Panel
-# -----------------------------
-with col2:
-    st.subheader("🎛 Controls Panel")
-
-    date = st.date_input("Select Date")
-
-    show_raw = st.checkbox("Show Raw Data")
-
-    refresh = st.button("Refresh Data")
-
-    if refresh:
-        st.success("Data refreshed!")
-    if show_raw:
-        st.dataframe(globalaverage_taginterest_df)
