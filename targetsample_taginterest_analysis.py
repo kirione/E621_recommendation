@@ -91,6 +91,9 @@ def tag_analysis(target_tag):
     print("Subset interests after filtering:", subset_interests_relativepresence)
     return subset_interests_enjoyment
 
+if __name__ == "__main__":
+    target_tag = "bondage"
+    print(tag_analysis(target_tag))
 
 
 

@@ -27,18 +27,15 @@ globalaverage_taginterest_df = pd.DataFrame(
 col1, col2 = st.columns([2, 1])
 with col1:
     st.subheader("📊 E621 Tags")
-
+    
     target_tag = st.selectbox("Select An E621 Tag to analyse", options=globalaverage_taginterest_df["tag"].tolist())
 
     #Top 10 tags associated with selected tag
+    st.subheader(f"Top 10 Tags Enjoyed by Users Who Like {target_tag} (In enjoyment score - harmonic mean of tag frequency and relative to global average)")
     target_tag_enjoyment = tag_analysis(target_tag)
-    target_tag_enjoyment_df = pd.DataFrame(list(target_tag_enjoyment.items()),columns=["tag", "value"]).sort_values("value", ascending=False).head(10)
-    #target_tag_enjoyment_df["value"] = target_tag_enjoyment_df["value"].round(3)
-    target_tag_enjoyment_df = target_tag_enjoyment_df.set_index("tag")
-    st.subheader("Top 10 Tags Enjoyed by Users Who Like {target_tag} (In enjoyment score - harmonic mean of tag frequency and relative to global average)")
-    st.bar_chart(target_tag_enjoyment_df, sort="-value")
+    target_tag_enjoyment_series = pd.Series(target_tag_enjoyment).sort_values(ascending=False).head(10)
+    st.bar_chart(target_tag_enjoyment_series)
 
-    
 
     st.image(
         "https://static1.e621.net/data/sample/b1/87/b187e41db4063a0bd9934c643835751f.jpg",
