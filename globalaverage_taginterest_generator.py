@@ -1,0 +1,33 @@
+import pandas as pd
+import json
+
+
+# Convert to DataFrame
+df = pd.read_json('E621_data/users_taginterest.json', lines=True)
+print(df.head())
+
+
+
+#TF-IDF to identify distinctive tags per user profile. Using which to calculate user profile tag presence, relative presence and enjoyment
+#calculate sample user average
+average_interests = {}
+total_users = 0
+
+for index, row in df.iterrows():
+    for tag in row["tag_interest"]:
+        if not tag in average_interests:
+                average_interests[tag] = 0
+
+    for tag in average_interests:
+        user_interest_in_tag = row["tag_interest"].get(tag, 0.0)
+        average_interests[tag] = (average_interests[tag] * total_users + user_interest_in_tag) / (total_users + 1)
+
+    total_users += 1
+
+with open('E621_data/globalaverage_taginterest.json', 'w') as f:
+        json.dump(average_interests, f, indent=4)
+
+
+
+
+

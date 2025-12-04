@@ -19,7 +19,6 @@ def get_user_interests(favs):
     
     return user_interests
 
-INTERESTS_FILE = "interests.json"
 MIN_FAVORITES = 100
 pages_to_scrape = 1
 
@@ -41,5 +40,5 @@ if __name__ == "__main__":
             total_users += 1
     print(f"Processed {total_users} users")
     
-    with open(INTERESTS_FILE, 'w') as f:
+    with open('E621_data/interests.json', 'w') as f:
         json.dump(interests, f, indent=4)

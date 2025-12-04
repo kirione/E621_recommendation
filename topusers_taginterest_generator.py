@@ -4,7 +4,7 @@ import json
 
 
 
-with open('interests.json', 'r', encoding='utf-8') as f:
+with open('E621_data/interests.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 #Flatten the JSON structure into a DataFrame of posts with post ID as primary key, and user ID as secondary key
@@ -35,18 +35,8 @@ df_trimmed['artist_tags'] = df_trimmed['tags'].apply(lambda x: x['artist'] if is
 df_final = df_trimmed.drop(columns=['tags'])
 print(f"df_final: {df_final.head()}")
 
-#Calculate user profile tag presence, relative presence and enjoyment
-
-
-#Look into understanding the need for tag pooling, but tentatively set hard limit for relative presence to exclude common tags 
-
-#Build results of favorites tag correlation per user
-
-#Aggregate tag correlation results across all users
-
 
 #calculate sample user average(relative presence) *ignores duplicate posts
-average_taginterest_file = "users_taginterest.json"
 #sum general tags interest per user
 for user_id, group in df_final.groupby('user_id'):
     tag_counts = {}
@@ -62,8 +52,7 @@ for user_id, group in df_final.groupby('user_id'):
     tag_relative_presence = {tag: count / total_posts for tag, count in tag_counts.items()}
     
     # Save to JSON
-    
-    with open(average_taginterest_file, 'a', encoding='utf-8') as f:
+    with open('E621_data/users_taginterest.json', 'w', encoding='utf-8') as f:
         json.dump({
         "user_id": user_id,
         "tag_interest": tag_relative_presence
