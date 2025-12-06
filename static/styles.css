@@ -1,0 +1,53 @@
+/* Fullscreen background gradient */
+#bg {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to bottom, #021024, #1f3b66);
+  z-index: -999;
+  pointer-events: none;
+}
+
+#content {
+  color: white
+}
+
+
+/* Snow container */
+#snow-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -998;
+  overflow: hidden;
+}
+
+/* Snowflake styling */
+.snowflake {
+  position: absolute;
+  top: -20px;
+  color: white;
+  font-size: 20px;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Make Streamlit content float above */
+.stApp {
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Optional: Make containers semi-transparent for glass effect */
+.stApp > header {
+  background: transparent !important;
+}
+
+div[data-testid="stMetricValue"],
+div[data-testid="stMarkdownContainer"],
+.element-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 1rem;
+}
