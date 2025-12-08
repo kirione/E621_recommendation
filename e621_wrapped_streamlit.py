@@ -18,6 +18,7 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+    
     #bg {
       position: fixed;
       inset: 0;
@@ -61,6 +62,52 @@ st.markdown(
       color: white !important;
     }
 
+    /* Force selectbox text to be black */
+    [data-baseweb="select"] {
+      color: black !important;
+    }
+    
+    [data-baseweb="select"] > div {
+      color: black !important;
+    }
+    
+    [data-baseweb="select"] input {
+      color: black !important;
+    }
+    
+    [data-baseweb="select"] span {
+      color: black !important;
+    }
+    
+    .stSelectbox select {
+      color: black !important;
+    }
+    
+    .stSelectbox div[data-baseweb="select"] div {
+      color: black !important;
+    }
+
+    /* Dropdown menu options */
+    [data-baseweb="popover"] {
+      color: black !important;
+    }
+    
+    [data-baseweb="popover"] li {
+      color: black !important;
+    }
+    
+    [data-baseweb="popover"] div {
+      color: black !important;
+    }
+    
+    [role="option"] {
+      color: black !important;
+    }
+    
+    [role="listbox"] li {
+      color: black !important;
+    }
+
     </style>
     
     <div id="bg"></div>
@@ -81,6 +128,27 @@ st.components.v1.html(
     </head>
     <body>
       <script>
+        const setSelectboxColor = () => {
+          const parentDoc = window.parent.document;
+          
+          // Target all selectbox elements in parent document
+          const selectboxes = parentDoc.querySelectorAll("select, div[data-baseweb='select'] input");
+          selectboxes.forEach(s => {
+            s.style.color = "black";
+            s.style.backgroundColor = "white";
+          });
+          
+          // Also target the select container
+          const selectContainers = parentDoc.querySelectorAll("div[data-baseweb='select']");
+          selectContainers.forEach(c => {
+            c.style.color = "black";
+          });
+        };
+
+        // Run after page loads and periodically to catch new selectboxes
+        setInterval(setSelectboxColor, 100);
+
+      
         function initSnow() {
           if (typeof gsap === 'undefined') {
             setTimeout(initSnow, 100);
