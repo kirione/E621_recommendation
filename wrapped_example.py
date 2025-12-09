@@ -34,7 +34,7 @@ st.markdown("""
       user-select: none;
       pointer-events: none;
     }
-    
+            
     .stApp {
         background: transparent !important;
     }
@@ -58,6 +58,23 @@ st.markdown("""
         text-align: center;
     }
     
+
+    /* start scene css */
+    .startscene_roll-container {
+    font-size: 120px;
+    font-weight: 800;
+    text-align: center;
+    perspective: 2000px;
+    margin-top: 80px;
+    }
+            
+    #roll-text .char {
+    display: inline-block;
+    color: white;              /* uses parent's color */
+    transform-origin: center center -120px;
+    text-shadow: 0 0 15px rgba(255,255,255,0.6);
+    }
+
     .big-text {
         font-size: 80px;
         font-weight: bold;
@@ -123,12 +140,8 @@ st.markdown("""
         font-size: 20px !important;
         padding: 15px 40px !important;
         border-radius: 30px !important;
-        border: none !important;
         font-weight: 700 !important;
-        box-shadow: none !important;
-        outline: none !important;
-        -webkit-appearance: none !important;
-        appearance: none !important;
+        transition: transform 1s ease;
     }
 
     /* Hover / focus / active (make hover slightly darker) */
@@ -139,36 +152,10 @@ st.markdown("""
     .stButton > button:hover {
         background-color: black !important; /* darker gold on hover */
         color: white !important;
-        transform: translateY(-1px);
-        animation: hoverLift 0.2s ease-out;
+        transform: scale3d(1.3, 1.3, 1) !important;
     }
 
-    /* Focus & active states */
-    div[data-testid="stButton"] > button:focus,
-    div[data-testid="stButton"] > button:active,
-    div[data-testid="stButton"] > button:focus-visible {
-        box-shadow: 0 0 0 3px rgba(255,215,0,0.15) !important;
-
-    /* HOVER STATE */
-    div[data-testid="stButton"] > button:hover {
-        background: #f0f0f0 !important;
-        color: black !important;
-    }
-
-    [data-baseweb="button"] {
-        background: white !important;
-        color: black !important;
-        font-size: 20px !important;
-        padding: 15px 40px !important;
-        border-radius: 30px !important;
-        border: none !important;
-        font-weight: bold !important;
-    }
     
-    [data-baseweb="button"]:hover {
-        background: #f0f0f0 !important;
-        color: black !important;
-    }
     </style>
     
     <div id="bg"></div>
@@ -180,6 +167,7 @@ st.components.v1.html("""
     <!DOCTYPE html>
     <html>
     <head>
+        <script src="https://cdn.jsdelivr.net/npm/split-type"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     </head>
     <body>
@@ -258,6 +246,36 @@ st.components.v1.html("""
             }
             
             initSnow();
+            // start scene text animation
+            document.addEventListener("DOMContentLoaded", function () {
+
+                const parentDoc = window.parent.document;
+
+                const rollText = parentDoc.querySelector('#roll-text');
+                if (!rollText) return;
+
+                const text = new SplitType(rollText, { types: 'chars' });
+
+                // animate characters
+                gsap.set(parentDoc.querySelectorAll('.char'), {
+                    transformStyle: "preserve-3d",
+                    rotationX: -90,
+                    opacity: 0
+                });
+
+                gsap.to(parentDoc.querySelectorAll('.char'), {
+                    rotationX: 270,
+                    opacity: 1,
+                    duration: 3,
+                    ease: "none",
+                    stagger: {
+                        each: 0.06,
+                        repeat: -1,
+                        repeatDelay: 0.3
+                    }
+                });
+
+            });
         </script>
     </body>
     </html>
@@ -275,7 +293,7 @@ def start_experience():
 # START SCREEN
 if not st.session_state.started:
     st.markdown("<br><br><br>", unsafe_allow_html=True)
-    st.markdown('<div class="big-text">Your 2024 Wrapped</div>', unsafe_allow_html=True)
+    st.markdown('<div id="roll-text" class="startscene_roll-container">E621 Wrapped 2025</div>', unsafe_allow_html=True)
     st.markdown("<br><br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
